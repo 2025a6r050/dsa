@@ -1,0 +1,88 @@
+#include&lt;stdio.h&gt;
+#include&lt;stdlib.h&gt;
+#define MAX 100
+int stack[MAX], top = -1;
+int isEmpty(){
+    return top == -1;
+}
+int isFull(){
+    return top == MAX-1;
+}
+void push(int value){
+    if(isFull())
+        printf(&quot;\nStack overflow. Cannot push into a stack. !!!\n&quot;);
+    else{
+        stack[++top] = value;
+        printf(&quot;\nPushed %d into the stack. !!\n&quot;, value);
+    }
+}
+int pop(){
+    if(isEmpty()){
+        printf(&quot;\nStack underflow. Cannot pop from empty stack. !!!\n&quot;);
+        return -1;
+    }
+    else{
+        int val = stack[top];
+        top--;
+        return val;
+    }
+}
+int peek(){
+    if(isEmpty()){
+
+        printf(&quot;\nStack underflow. Cannot peek from empty stack. !!!\n&quot;);
+        return -1;
+    }
+    else
+        return stack[top];
+}
+void show(){
+    if(isEmpty())
+        printf(&quot;\nStack is empty !!!\n&quot;);
+    else{
+        printf(&quot;Stack elements are: \n&quot;);
+        for(int i=top; i&gt;=0; i--){
+            printf(&quot;%d\n&quot;, stack[i]);
+        }
+    }
+}
+int main(){
+    int choice, val, res;
+    while(1){
+        printf(&quot;1. Push\n&quot;);
+        printf(&quot;2. Pop\n&quot;);
+        printf(&quot;3. Peek\n&quot;);
+        printf(&quot;4. Display\n&quot;);
+        printf(&quot;5. Exit\n&quot;);
+        printf(&quot;Enter Choice: &quot;);
+        scanf(&quot;%d&quot;, &amp;choice);
+        switch(choice){
+            case 1:
+                printf(&quot;Enter Value: &quot;);
+                scanf(&quot;%d&quot;, &amp;val);
+                push(val);
+                break;
+
+            case 2:
+                res = pop();
+                if(res != -1)
+                    printf(&quot;\n%d pop from stack.\n&quot;, res);
+                break;
+            case 3:
+                res = peek();
+                if(res != -1)
+                    printf(&quot;\n%d is avaiable at top of stack.\n&quot;, res);
+                break;
+            case 4:
+                show();
+                break;
+            case 5:
+                exit(0);
+                break;
+            default:
+                printf(&quot;\nInvalid Choice...\n&quot;);
+        }
+        printf(&quot;\n&quot;);
+    }
+    return 0;
+}
