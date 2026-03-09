@@ -1,0 +1,57 @@
+#include <stdio.h>
+#include <string.h>
+#include <math.h>
+#include <stdlib.h>
+#include <ctype.h>
+
+int operand[100];
+int top1 = -1;
+
+int EvalPostfixExpression(char* exp){
+    int i, len = strlen(exp);
+    
+    for(i=0 ;i< len ;i++) {
+        if(isdigit(exp[i])){
+            int num = 0;
+            while(isdigit(exp[i])){
+                num =  num * 10 + exp[i] -'0';
+                i++;
+            }
+            i--;
+            operand[++top1] = num;
+        }
+        else if(exp[i] == '+' || exp[i] == '-' || exp[i] == '*' || exp[i] == '/' || exp[i] == '^'){
+            int x = operand[top1--];
+            int y = operand[top1--];
+            int z;
+            
+            switch(exp[i]){
+                case '+':
+                    z = y + x;
+                    break;
+                case '-':
+                    z = y - x;
+                    break;
+                case '*':
+                    z = y * x;
+                    break;
+                case '/':
+                    z = y / x;
+                    break;
+                case '^':
+                    z =(int)round(pow(y,x));
+                    break;
+            }
+            operand[++top1] =z;
+        }
+    }
+    return operand[top1--];
+}
+
+int main(){
+    char exp[100];
+    fgets(exp,sizeof(exp),stdin);
+    int result = EvalPostfixExpression(exp);
+    printf("%d" ,result);
+    return 0;
+}
